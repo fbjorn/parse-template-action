@@ -1,10 +1,6 @@
 #!/bin/sh -l
 
-echo "Hello $1"
-time=$(date)
-set -x
-ls -la /github
-ls -la /github/workspace
-ls -la /github/home
-ls -la /github/workflow
-echo "::set-output name=time::$time"
+echo "${1}" | base64 -D > /tmp/template.tpl
+result=$(parse-template /tmp/template.tpl)
+
+echo "::set-output name=time::$result"

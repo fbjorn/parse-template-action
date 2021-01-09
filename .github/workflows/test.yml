@@ -5,11 +5,14 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
+    - name: Test
+      id: foo
+      run: echo "::set-output name=content::$(echo 123123 | base64)\n"
     - name: Hello world action step
       id: hello
       uses: fbjorn/parse-template-action@gh-action
       with:
-        who-to-greet: 'Mona the Octocat'
+        who-to-greet: ${{ steps.foo.outputs.content }}
     # Use the output from the `hello` step
     - name: Get the output time
       run: echo "The time was ${{ steps.hello.outputs.time }}"
