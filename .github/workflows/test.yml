@@ -7,7 +7,7 @@ jobs:
     steps:
     - name: Test
       id: foo
-      run: echo "::set-output name=content::$(echo 123123 | base64)\n"
+      run: echo "::set-output name=content::$(echo 123123 | base64)"
     - name: Hello world action step
       id: hello
       uses: fbjorn/parse-template-action@gh-action
