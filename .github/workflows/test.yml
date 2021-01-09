@@ -7,12 +7,14 @@ jobs:
     steps:
     - name: Test
       id: foo
-      run: echo "::set-output name=content::$(echo 123123 | base64)"
+      run: echo "::set-output name=content::$(echo {{ .Env.foo }} | base64)"
     - name: Hello world action step
       id: hello
       uses: fbjorn/parse-template-action@gh-action
       with:
         who-to-greet: ${{ steps.foo.outputs.content }}
+      env:
+        foo: bar
     # Use the output from the `hello` step
     - name: Get the output time
       run: echo "The time was ${{ steps.hello.outputs.time }}"
