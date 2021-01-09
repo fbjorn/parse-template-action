@@ -5,16 +5,16 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to say hello
     steps:
-    - name: Test
-      id: foo
+    - name: Prepare template content
+      id: prepare_template
       run: echo "::set-output name=content::$(echo {{ .Env.foo }} | base64)"
-    - name: Hello world action step
-      id: hello
+    - name: Render template
+      id: render_template
       uses: fbjorn/parse-template-action@gh-action
       with:
-        who-to-greet: ${{ steps.foo.outputs.content }}
+        who-to-greet: ${{ steps.prepare_template.outputs.content }}
       env:
         foo: bar
     # Use the output from the `hello` step
     - name: Get the output time
-      run: echo "The time was ${{ steps.hello.outputs.time }}"
+      run: echo "The time was ${{ steps.render_template.outputs.time }}"
